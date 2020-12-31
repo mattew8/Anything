@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        {% for date in date_list %}
+        <li style="display: inline;">
+            <a href="{% url 'blog:post_month_archive' year|date:'Y' date|date:'b' %}">
+                {{ date|date:"F"}}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    <br>
+    <div>
+        <ul>
+            {% for post in object_list %}
+            <li>{{ post.modify_dt|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;</li>
+            <a href="{{post.get_absolute_url}}">{{post.title}}</a>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    
+
+</body>
+</html>

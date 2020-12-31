@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Blog List</h1><br>
+    {% for post in posts %}
+    <a href="{% url 'blogs:post_detail' post.slug %}">{{post.title}}</a>
+    <!-- get_absolute_url() -> models에서 정의! - /blog/post/slug단어/ 형태로 url!! -->
+    {{post.modify_dt|date:"N d, Y"}}
+    <!-- modify_dt 속성값을 N d, Y 형식으로 출력 -->
+    <p>{{post.description}}</p>
+    {% endfor %}
+    <br>
+
+    <!-- 페이징 기능 -->
+    <div>
+        <span>
+            {% if page_obj.has_previous %}
+            <!-- page_obj -> django의 Page 객체가 들어있는 context변수(즉 default) -->
+            <!-- page_obj.has_previous -> 현 페이지 기준 이전 페이지 있는지 확인하는 것! -->
+                <a href="?page={{ page_obj.previous_page_number }}">PreviousPage</a>
+                <!-- {{ page_obj.previous_page_number }} -> 이전 페이지 번호 -->
+                <!-- 즉 href링크는 ?page=이전 페이지 번호 형태! -->
+            {% endif %}
+
+            Page {{ page_obj.number }} of {{page_obj.paginator.num_pages}}
+            <!-- {{ page_obj.number }} -> 현재 페이지 번호 -->
+            <!-- {{ page_obj.paginator.num_pages }} -> 전체 페이지 번호 -->
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">NexePage</a>
+                <!-- page_obj.next_page_number -> 다음 페이지 번호 -->
+            {% endif %}
+        </span>
+    </div>
+
+</body>
+</html>

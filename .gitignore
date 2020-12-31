@@ -1,0 +1,14 @@
+__pycache__
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+media
+
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
+
+venv
