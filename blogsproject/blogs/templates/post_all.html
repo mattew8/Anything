@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+<title>{%block title%}post_all{%endblock%}</title>
+{% block content %}
     <h1>Blog List</h1><br>
     {% for post in posts %}
     <a href="{{post.get_absolute_url}}">{{post.title}}</a>
@@ -37,6 +33,4 @@
             {% endif %}
         </span>
     </div>
-
-</body>
-</html>
+{%endblock%}

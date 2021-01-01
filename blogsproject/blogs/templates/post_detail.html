@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+<title>{%block title%}post_detail{%endblock%}</title>
+{% block content %}
     <h2>{{object.title}}</h2>
     <p>
         {% if object.get_previous %}
@@ -39,5 +35,4 @@
         {{ object.content|linebreaks}}
         <!-- |linebreaks -> 새로운 line을 인식하게 함 -->
     </div>
-</body>
-
+{%endblock%}
