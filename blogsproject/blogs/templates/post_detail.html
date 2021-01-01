@@ -13,13 +13,22 @@
             &laquo;-- {{ object.get_previous }}
             <!-- &laquo; -> html특수문자 -->
         </a>
+
+        {% else %}
+        no page
+
         {% endif %}
 
+        📄📌
+        
         {% if object.get_next %}
         <a href="{{ object.get_next.get_absolute_url }}" title="View next post?">
             {{ object.get_next }} --&raquo;
             <!-- &laquo; -> html특수문자 -->
         </a>
+        {% else %}
+        no page
+
         {% endif %}
     </p>
     
@@ -30,9 +39,5 @@
         {{ object.content|linebreaks}}
         <!-- |linebreaks -> 새로운 line을 인식하게 함 -->
     </div>
-
-
-    
-
 </body>
-</html>
+

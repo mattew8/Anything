@@ -6,10 +6,11 @@
     <title>Document</title>
 </head>
 <body>
+    <h1>Post Archives for {{year|date:"N Y"}}</h1>
     <ul>
         {% for date in date_list %}
         <li style="display: inline;">
-            <a href="{% url 'blog:post_month_archive' year|date:'Y' date|date:'b' %}">
+            <a href="{% url 'blogs:post_month_archive' year|date:'Y' date|date:'b' %}">
                 {{ date|date:"F"}}
             </a>
         </li>
@@ -19,8 +20,8 @@
     <div>
         <ul>
             {% for post in object_list %}
-            <li>{{ post.modify_dt|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;</li>
-            <a href="{{post.get_absolute_url}}">{{post.title}}</a>
+            <li>{{ post.modify_dt|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;
+            <a href="{{ post.get_absolute_url }}">{{post.title}}</a></li>
             {% endfor %}
         </ul>
     </div>

@@ -8,7 +8,7 @@
 <body>
     <h1>Blog List</h1><br>
     {% for post in posts %}
-    <a href="{% url 'blogs:post_detail' post.slug %}">{{post.title}}</a>
+    <a href="{{post.get_absolute_url}}">{{post.title}}</a>
     <!-- get_absolute_url() -> models에서 정의! - /blog/post/slug단어/ 형태로 url!! -->
     {{post.modify_dt|date:"N d, Y"}}
     <!-- modify_dt 속성값을 N d, Y 형식으로 출력 -->
@@ -32,7 +32,7 @@
             <!-- {{ page_obj.paginator.num_pages }} -> 전체 페이지 번호 -->
 
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">NexePage</a>
+                <a href="?page={{ page_obj.next_page_number }}">NextPage</a>
                 <!-- page_obj.next_page_number -> 다음 페이지 번호 -->
             {% endif %}
         </span>

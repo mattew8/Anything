@@ -10,9 +10,9 @@ class Post(models.Model):
     # allow_unicode=True 통해 한글 처리 O
     # help_text -> form에서 해당 칼럼 설명해주는 문구로 나타남(Admin에서 확인O)
     description = models.CharField('DESCRIPTION', max_length=100, blank=True, help_text='simple description text.')
-    content = models.TextField('CONTENT')
+    content = models.TextField('content')
     create_dt = models.DateField('CREATE DATE', auto_now_add=True)
-    # auto_now_add=True -> 객체 생성 시각(작성)을 자동으로 기록
+    # auto_now_add=True -> 객체 생성 시간(작성)을 자동으로 기록
     modify_dt = models.DateField('MODIFY DATE', auto_now=True)
     # auto_now -> 객체 저장 시간(변경)을 자동으로 기록
     class Meta:

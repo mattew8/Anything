@@ -33,20 +33,24 @@ class PostYAV(YearArchiveView):
     model = Post
     date_field = 'modify_dt'
     make_object_list = True
+    template_name = 'post_archive_year.html'
     # True -> 해당 연도에 해당하는 객체 리스트를 만들어 템플릿에 넘겨줌!
     # 즉 html에서 object_list 변수 사용할 수 O
 
 class PostMAV(MonthArchiveView):
     model = Post
     date_field = 'modify_dt'
+    template_name = 'post_archive_month.html'
 
 class PostDAV(DayArchiveView):
     model = Post
     date_field = 'modify_dt'
+    template_name = 'post_archive_day.html'
 
 class PostTAV(TodayArchiveView):
     model = Post
     date_field = 'modify_dt'
+    template_name = 'post_archive_day.html'
 
 
 
