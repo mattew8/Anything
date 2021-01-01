@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.dates import ArchiveIndexView, YearArchiveView, MonthArchiveView
 from django.views.generic.dates import DayArchiveView, TodayArchiveView
 from blogs.models import Post
@@ -52,8 +52,26 @@ class PostTAV(TodayArchiveView):
     date_field = 'modify_dt'
     template_name = 'post_archive_day.html'
 
+# TAG
+class TagCloudTV(TemplateView):
+    template_name = 'taggit/taggit_cloud.html'
+    # 이걸로 tag를 어떻게 띄워준다야?
+    # -> taggit_cloud.html에서 {%get_tagcloud%}를 통해 클라우드 처리!
 
+class TaggedObjectLV(ListView):
+    # 특정 tag가 달려있는 Post들의 list 보여주는 함수
+    template_name = 'taggit/taggit_post_list.html'
+    model = Post
 
+    def get_queryset(self):
+        return Post.objects.filter(tags__name=self.kwargs.get('tag'))
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # super()왜 쓰냐? -> 밑에서 새로 정의해줄텐데, 그 전 원래 상태의 상위 context를 호출한 것!
+        context['tagname'] = self.kwargs['tag']
+        # self.kwargs['tag'] <- url을 통해 넘어오는 값을 추출할 때 사용!
+        # 즉 url에서 tag 파라미터로 넘어온 값을 context에 담음
+        return context
 
 # Create your views here.

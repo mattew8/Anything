@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{%block title%}taggit_post_list{%endblock%}
+
+{%block content%}
+    <h1>Posts for tag - {{ tagname }}</h1>
+    <!-- tagname? -> view에서 보내준 context! url에서 추출된 태그들 -->
+    <br>
+    {% for post in object_list %}
+        <!-- object_list -> ListView에서 넘겨준, 특정 tag가 달려있는 Post들의 list! -->
+        <h2><a href="{{post.get_absolute_url}}">{{post.title}}</a></h2>
+        {{post.modify_dt|date:"N d, Y"}}
+        <p>{{post.description}}</p>
+        <!-- for문 돌면서 tag달린 Post들의 title, modify_dt, description 받아옴 -->
+    {% endfor %}
+
+{%endblock%}

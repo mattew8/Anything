@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{%block title%}taggit_cloud{%endblock%}
+
+{%block content%}
+    <h1>Blog Tag</h1>
+    <br>
+    <div>
+        {% load taggit_templatetags2_tags %}
+        {% get_tagcloud as tags %}
+        <!-- 마찬가지! 커스텀 태그 사용해 모든 태그 추출 후 tags로 이름붙임 -->
+        {% for tag in tags %}
+        <span class="tag-{{tag.weight|floatformat:0}}">
+            <!-- {{tag.weight}} - 태그의 중요도. num_times를 미리 정의된 값으로 반환한 수치 -->
+            <a href="{% url 'blogs:tagged_object_list' tag.name %}">{{tag.name}}({{tag.num_times}})</a>
+        <!-- {{tag.num_times}} - 태그가 몇 번 사용되었는가! -->
+        </span>
+        {% endfor %}
+    </div>
+{%endblock%}

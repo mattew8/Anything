@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 class Post(models.Model):
     title = models.CharField(verbose_name='TITLE', max_length=50)
@@ -15,6 +16,10 @@ class Post(models.Model):
     # auto_now_add=True -> 객체 생성 시간(작성)을 자동으로 기록
     modify_dt = models.DateField('MODIFY DATE', auto_now=True)
     # auto_now -> 객체 저장 시간(변경)을 자동으로 기록
+    tags = TaggableManager(blank=True)
+    # TaggableManager? -> taggit앱 내에서 정의된 클래스. Tags란 별칭과 null=True항목 default
+    # taggit패키지에는 자체 테이블 정의O! -> 데이터베이스에 Tag, TaggedItem이라는 테이블 자동 추가
+
     class Meta:
         # 필드 속성 외에 필요한 파라미터 -> Mete내부 클래스로 정의!
         verbose_name = 'post'
