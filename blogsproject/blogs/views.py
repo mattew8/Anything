@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.dates import ArchiveIndexView, YearArchiveView, MonthArchiveView
 from django.views.generic.dates import DayArchiveView, TodayArchiveView
-from blogs.models import Post
+from blogs.models import Post, Comment
+from blogs.forms import CommentForm
 
 # ListView
 class PostLV(ListView):
@@ -18,6 +19,11 @@ class PostLV(ListView):
 class PostDV(DetailView):
     model = Post
     template_name = 'post_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['commentform'] = CommentForm(self.request)
+        return context
 
 # ArchiveView
 # -> 테이블로부터 객체 리스트를 가져와, 날짜 필드를 기준으로 최신 객체를 출력

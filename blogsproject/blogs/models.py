@@ -41,4 +41,9 @@ class Post(models.Model):
     def get_next(self):
         return self.get_next_by_modify_dt()
 
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    body = models.CharField('내용', max_length=200)
+    created_dt = models.DateField(auto_now = True)
+ 
 # Create your models here.
