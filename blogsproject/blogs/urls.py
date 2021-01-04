@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from blogs.views import PostLV, PostDV, PostAV, PostMAV, PostDAV, PostTAV, PostYAV, TagCloudTV, TaggedObjectLV, create_comment
+from blogs.views import PostLV, PostDV, PostAV, PostMAV, PostDAV, PostTAV, PostYAV, TagCloudTV, TaggedObjectLV, create_comment, SearchFormView
 
 app_name = 'blogs'
 
@@ -21,4 +21,7 @@ urlpatterns = [
     # tag
     path('tag/', TagCloudTV.as_view(), name='tag_cloud'),
     path('tag/<str:tag>/', TaggedObjectLV.as_view(), name='tagged_object_list'),
+
+    # search
+    path('search/', SearchFormView.as_view(), name='search'),
 ]

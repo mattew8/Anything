@@ -1,12 +1,11 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView, TemplateView, CreateView
+from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView, TemplateView, FormView
 from django.views.generic.dates import ArchiveIndexView, YearArchiveView, MonthArchiveView
 from django.views.generic.dates import DayArchiveView, TodayArchiveView
 from blogs.models import Post, Comment
-from blogs.forms import CommentForm
-from django.shortcuts import redirect, get_object_or_404, resolve_url
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
+from blogs.forms import CommentForm, PostSearchForm
+from django.db.models import Q
+
 
 # ListView
 class PostLV(ListView):
@@ -108,5 +107,33 @@ def create_comment(request,post_id,slug):
         filled_form.save()  
     
     return redirect('blogs:post_detail', slug)
+
+class SearchFormView(FormView):
+    form_class = PostSearchForm
+    template_name = 'post_search.html'
+
+    # form_valid <- 유효성 검사 실시! 에러 없으면 실행
+    def form_valid(self, form):
+        searchWord = form.cleaned_data['search_word']
+        # 유효성 검사 통과시, 사용자가 입력한 값은 cleaned_data 라는 사전에 존재
+        # 이 사전에서 search_word(이용자가 form에서 입력한 값)를 추출해 searchWord 란 이름으로 저장!
+
+        post_list = Post.objects.filter(Q(title__icontains=searchWord)|Q(description__icontains=searchWord)
+        |Q(content__icontains=searchWord)).distinct()
+
+        context = {}
+        # context 변수를 dic 형태로!
+
+        context['form'] = form
+        # form 객체, 즉 여기서는 PostSearchForm을 넘겨주자
+
+        context['search_term'] = searchWord
+        # 검색용 단어인 searchWord도 넘겨주기
+        context['object_list'] = post_list
+        # 검색 결과 리스트인 post_list도 넘겨주기
+
+        return render(self.request, self.template_name, context)
+        # form_valid 메소드는 보통 HttpResponseRedirect 객체를 반환한다.
+        # 여기서는 form_valid 메소드를 재정의하여 render함수를 사용! -> HttpResponse 객체를 반환했다!
 
 # Create your views here.

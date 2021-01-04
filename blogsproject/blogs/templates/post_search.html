@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{%block title%}post_search{%endblock%}
+
+{% block content %}
+<h1>blog search</h1>
+<form action="." method="POST">
+    {%csrf_token%}
+    {{form}}
+    <input type='submit' value="Submit">
+</form>
+<br>
+{% if object_list %}
+    {% for post in object_list %}
+    <a href='{{post.get_absolute_url}}'>{{post.title}}</a>
+    {{post.modify_dt}}
+    {{post.description}}
+    {% endfor %}
+
+{% elif search_term %}
+<!-- object_list가 없는 경우 -> 그럼 검색은 했는지-> 검색 단어를 입력했는지 여부 판단 -->
+    <b>Search_Word({{search_term}})Not Found</b>
+
+{% endif %}
+
+{% endblock %}
