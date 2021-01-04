@@ -1,5 +1,5 @@
 from django.contrib import admin
-from blogs.models import Post
+from blogs.models import Post, Comment
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
@@ -12,5 +12,8 @@ class PostAdmin(admin.ModelAdmin):
         return super().get_queryset(request).prefetch_related('tags')
     def tag_list(self, obj):
         return ','.join(o.name for o in obj.tags.all())
+
+admin.site.register(Comment)
+
 
 # Register your models here.

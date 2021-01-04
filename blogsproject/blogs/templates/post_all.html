@@ -5,6 +5,7 @@
     <h1>Blog List</h1><br>
     {% for post in posts %}
     <a href="{{post.get_absolute_url}}">{{post.title}}</a>
+    <!-- <a href="{% url 'blogs:post_detail' post.id %}">{{post.title}}</a> -->
     <!-- get_absolute_url() -> models에서 정의! - /blog/post/slug단어/ 형태로 url!! -->
     {{post.modify_dt|date:"N d, Y"}}
     <!-- modify_dt 속성값을 N d, Y 형식으로 출력 -->

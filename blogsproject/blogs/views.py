@@ -1,9 +1,12 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import ListView, DetailView, TemplateView, CreateView
 from django.views.generic.dates import ArchiveIndexView, YearArchiveView, MonthArchiveView
 from django.views.generic.dates import DayArchiveView, TodayArchiveView
 from blogs.models import Post, Comment
 from blogs.forms import CommentForm
+from django.shortcuts import redirect, get_object_or_404, resolve_url
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 
 # ListView
 class PostLV(ListView):
@@ -19,11 +22,17 @@ class PostLV(ListView):
 class PostDV(DetailView):
     model = Post
     template_name = 'post_detail.html'
+    # context_object_name = 'my_post'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['commentform'] = CommentForm(self.request)
+        context['commentform'] = CommentForm()
         return context
+
+# def PostDV(request,post_id):
+#     my_post = get_object_or_404(Post, pk=post_id)
+
+#     return render(request, 'post_detail.html', {'my_post':my_post})
 
 # ArchiveView
 # -> 테이블로부터 객체 리스트를 가져와, 날짜 필드를 기준으로 최신 객체를 출력
@@ -79,5 +88,25 @@ class TaggedObjectLV(ListView):
         # self.kwargs['tag'] <- url을 통해 넘어오는 값을 추출할 때 사용!
         # 즉 url에서 tag 파라미터로 넘어온 값을 context에 담음
         return context
+
+
+# 댓글
+
+# class Create_Comment(CreateView):
+#     model = Comment
+#     fields = ('title', 'description')
+#     template_name = 'post_detail.html'
+#     success_url = '/'
+#     form_class = CommentForm
+
+def create_comment(request,post_id,slug):
+    filled_form = CommentForm(request.POST) 
+
+    if filled_form.is_valid():    
+        temp_form = filled_form.save(commit=False)         
+        temp_form.post = Post.objects.get(id = post_id) 
+        filled_form.save()  
+    
+    return redirect('blogs:post_detail', slug)
 
 # Create your views here.
