@@ -20,6 +20,9 @@
         <a href="{% url 'register' %}">Register</a>
         {% endif %}
     </ul>
+    <a href="{% url 'blogs:add' %}">Add</a>
+    <a href="{% url 'blogs:change' %}">Change</a>
+
     {%block content%}{%endblock%}
 </body>
 </html>

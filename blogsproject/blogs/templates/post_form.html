@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Post Create/Update = {{user}}</h1>
+    {% if form.errors %}
+    {{form.errors}}
+    {% endif %}
+
+    <form action="." method="POST">
+        {%csrf_token%}
+        <span>title : {{form.title}}</span>
+        <span>slug : {{form.slug}}</span>
+        <span>description : {{form.description}}</span>
+        <span>content : {{form.content}}</span>
+        <span>tags : {{form.tags}}</span>
+        <input type="submit" value="Submit">
+    </form>
+
+
+{% endblock %}

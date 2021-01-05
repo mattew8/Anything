@@ -5,7 +5,10 @@ from django.views.generic.dates import DayArchiveView, TodayArchiveView
 from blogs.models import Post, Comment
 from blogs.forms import CommentForm, PostSearchForm
 from django.db.models import Q
-
+from django.views.generic import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from blogsproject.views import OwnerOnlyMixin
 
 # ListView
 class PostLV(ListView):
@@ -135,5 +138,50 @@ class SearchFormView(FormView):
         return render(self.request, self.template_name, context)
         # form_valid 메소드는 보통 HttpResponseRedirect 객체를 반환한다.
         # 여기서는 form_valid 메소드를 재정의하여 render함수를 사용! -> HttpResponse 객체를 반환했다!
+
+# C
+class PostCreateView(LoginRequiredMixin, CreateView):
+    # LoginRequiredMixin 를 상속 받았으므로, 로그인된 경우만 접근 가능
+    # CreateView 
+    # -> 클래스 속성 정의하면 적절한 form을 보여주고, 입력 내용에 에러 없으면 입력된 내용으로 테이블 레코드 생성!
+    # -> 모델명소문자_form.html 이 default 템플릿명!
+    model = Post
+    fields = ['title', 'slug', 'description', 'content', 'tags']
+    initial = {'slug': 'auto-filling-do-not-input'}
+    template_name = 'post_form.html'
+    # 입력 받을 field!
+    success_url = reverse_lazy('blogs:index')
+    def form_valid(self, form):
+        # CreateView에서는 유효성 검사를 수행해 에러가 없으면 form_valid 메소드를 호출한다!
+        # 또한 유효성 검사를 통과하면 모델 객체(이름은 instance)를 생성해 form의 내용을 overwrite한다
+        form.instance.owner = self.request.user
+        # 이 때 해당 객체의 owner는 = 이 요청을 request한 user와 같다!
+        return super().form_valid(form)
+        # 부모 클래스의 form_valid를 호출! 이를 통해 form.save()가 작동, DB에 저장된 후 success_url로 redirect된다
+
+# R
+class PostChangeLV(LoginRequiredMixin, ListView):
+    template_name = 'post_change_list.html'
+    def get_queryset(self):
+        return Post.objects.filter(owner=self.request.user)
+
+# U
+class PostUpdateView(OwnerOnlyMixin, UpdateView):
+    # UpdateView 
+    # -> 모델명소문자_form.html 이 default 템플릿명!
+    model = Post
+    template_name = 'post_form.html'
+    fields = ['title', 'slug', 'description', 'content', 'tags']
+    success_url = reverse_lazy('blogs:index')   
+
+# D
+class PostDeleteView(OwnerOnlyMixin, DeleteView):
+    # DeleteView 
+    # -> 모델명소문자_confirm_delete.html이 default 템플릿명
+    model = Post
+    template_name = 'post_confirm_delete.html'
+    success_url = reverse_lazy('blogs:index')
+
+
 
 # Create your views here.

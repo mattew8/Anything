@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from taggit.managers import TaggableManager
+from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 class Post(models.Model):
     title = models.CharField(verbose_name='TITLE', max_length=50)
@@ -19,6 +21,7 @@ class Post(models.Model):
     tags = TaggableManager(blank=True)
     # TaggableManager? -> taggit앱 내에서 정의된 클래스. Tags란 별칭과 null=True항목 default
     # taggit패키지에는 자체 테이블 정의O! -> 데이터베이스에 Tag, TaggedItem이라는 테이블 자동 추가
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='OWNER', blank=True, null=True)
 
     class Meta:
         # 필드 속성 외에 필요한 파라미터 -> Mete내부 클래스로 정의!
@@ -40,6 +43,10 @@ class Post(models.Model):
 
     def get_next(self):
         return self.get_next_by_modify_dt()
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title, allow_unicode=True)
+        super().save(*args, **kwargs)
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
