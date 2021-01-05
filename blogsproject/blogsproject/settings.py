@@ -39,8 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blogs',
+    # 태그
     'taggit.apps.TaggitAppConfig',
     'taggit_templatetags2',
+    # 인증
+    'widget_tweaks',
+
 ]
 
 MIDDLEWARE = [
@@ -125,8 +129,12 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# 태그
 TAGGIT_CASE_INSENSITIVE = True
 # 태그 이름에 대소문자 구분x
-
 TAGGIT_LIMIT = 50
 # 태그 클라우드에 나타나는 태그의 최대 개수 지정
+
+# 인증
+# LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'

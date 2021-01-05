@@ -1,0 +1,23 @@
+{%extends "base.html"%}
+{%block title%}Register{%endblock%}
+
+{% block content %}
+    <h1>New User Registration</h1>
+    <p>Please enter your username and password twice</p>
+    <div>
+    {% if form.errors %}
+    {{form.errors}}
+    </div>
+    {% endif %}
+
+    <form action="." method="POST">
+        {% csrf_token %}
+        username<br>
+        {{form.username}}<br>
+        password<br>
+        {{form.password1}}
+        {{form.password2}}
+        <input type="submit" value="Register">
+    </form>
+
+{% endblock %}
