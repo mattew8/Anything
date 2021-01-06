@@ -8,11 +8,9 @@
 
     <form action="." method="POST">
         {%csrf_token%}
-        <span>title : {{form.title}}</span>
-        <span>slug : {{form.slug}}</span>
-        <span>description : {{form.description}}</span>
+        <span>title : {{form.title}}</span><br>
+        <span>description : {{form.description}}</span><br>
         <span>content : {{form.content}}</span>
-        <span>tags : {{form.tags}}</span>
         <input type="submit" value="Submit">
     </form>
 

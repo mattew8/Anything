@@ -27,8 +27,8 @@ urlpatterns = [
     path('search/', SearchFormView.as_view(), name='search'),
 
     # CRUD
-    path('add/', PostCreateView.as_view(), name='add'),
-    path('change/', PostChangeLV.as_view(), name='change'),
-    path('<int:pk>/update/', PostUpdateView.as_view(), name='update'),
-    path('<int:pk>/delete/', PostDeleteView.as_view(), name='delete'),
+    path('add/', PostCreateView, name='add'),
+    path('change/', PostChangeLV, name='change'),
+    path('<int:post_pk>/update/', PostUpdateView, name='update'),
+    path('<int:post_pk>/delete/', PostDeleteView, name='delete'),
 ]

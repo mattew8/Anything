@@ -2,12 +2,12 @@
 
 {% block content %}
     <h1>Post Change - {{user}}</h1>
-    <div>{% for item in object_list %}
-    {{item.title}}
-    {{item.description}}
-    {{item.owner}}
-    <a href="{% url 'blogs:update' item.id %}">Update</a>
-    <a href="{% url 'blogs:delete' item.id %}">Delete</a>
-    {%endfor%}
-    </div>
+    {% for item in post %}
+        {% if item.owner == request.user %}
+            {{item.title}}
+            {{item.owner}}
+            <a href="{% url 'blogs:update' item.id %}">Update</a>
+            <a href="{% url 'blogs:delete' item.id %}">Delete</a><br>
+        {% endif %}
+    {% endfor %}    
 {% endblock %}

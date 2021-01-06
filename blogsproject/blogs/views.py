@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, TemplateView, FormView
 from django.views.generic.dates import ArchiveIndexView, YearArchiveView, MonthArchiveView
 from django.views.generic.dates import DayArchiveView, TodayArchiveView
 from blogs.models import Post, Comment
-from blogs.forms import CommentForm, PostSearchForm
+from blogs.forms import CommentForm, PostSearchForm, PostCreateForm
 from django.db.models import Q
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -140,48 +140,38 @@ class SearchFormView(FormView):
         # 여기서는 form_valid 메소드를 재정의하여 render함수를 사용! -> HttpResponse 객체를 반환했다!
 
 # C
-class PostCreateView(LoginRequiredMixin, CreateView):
-    # LoginRequiredMixin 를 상속 받았으므로, 로그인된 경우만 접근 가능
-    # CreateView 
-    # -> 클래스 속성 정의하면 적절한 form을 보여주고, 입력 내용에 에러 없으면 입력된 내용으로 테이블 레코드 생성!
-    # -> 모델명소문자_form.html 이 default 템플릿명!
-    model = Post
-    fields = ['title', 'slug', 'description', 'content', 'tags']
-    initial = {'slug': 'auto-filling-do-not-input'}
-    template_name = 'post_form.html'
-    # 입력 받을 field!
-    success_url = reverse_lazy('blogs:index')
-    def form_valid(self, form):
-        # CreateView에서는 유효성 검사를 수행해 에러가 없으면 form_valid 메소드를 호출한다!
-        # 또한 유효성 검사를 통과하면 모델 객체(이름은 instance)를 생성해 form의 내용을 overwrite한다
-        form.instance.owner = self.request.user
-        # 이 때 해당 객체의 owner는 = 이 요청을 request한 user와 같다!
-        return super().form_valid(form)
-        # 부모 클래스의 form_valid를 호출! 이를 통해 form.save()가 작동, DB에 저장된 후 success_url로 redirect된다
+def PostCreateView(request):
+    if request.method == "POST":
+        form = PostCreateForm(request.POST)
+        if form.is_valid():
+            form.instance.owner = request.user
+            form.save()
+            return redirect('blogs:index')
+    form = PostCreateForm()
+    return render(request, 'post_form.html', {'form' : form})
+
 
 # R
-class PostChangeLV(LoginRequiredMixin, ListView):
-    template_name = 'post_change_list.html'
-    def get_queryset(self):
-        return Post.objects.filter(owner=self.request.user)
+def PostChangeLV(request):
+    post = Post.objects.all()
+    context = {'post' : post}
+    return render(request, 'post_change_list.html', context)
 
 # U
-class PostUpdateView(OwnerOnlyMixin, UpdateView):
-    # UpdateView 
-    # -> 모델명소문자_form.html 이 default 템플릿명!
-    model = Post
-    template_name = 'post_form.html'
-    fields = ['title', 'slug', 'description', 'content', 'tags']
-    success_url = reverse_lazy('blogs:index')   
+def PostUpdateView(request, post_pk):
+    my_post = get_object_or_404(Post, pk=post_pk)
+    if request.method == 'POST':
+        form = PostCreateForm(request.POST, instance=my_post)
+        if form.is_valid():
+            form.save()
+            return redirect('blogs:change')
+    form = PostCreateForm(instance = my_post)
+    return render(request, 'post_form.html', {'form' : form})
 
 # D
-class PostDeleteView(OwnerOnlyMixin, DeleteView):
-    # DeleteView 
-    # -> 모델명소문자_confirm_delete.html이 default 템플릿명
-    model = Post
-    template_name = 'post_confirm_delete.html'
-    success_url = reverse_lazy('blogs:index')
-
-
+def PostDeleteView(request, post_pk):
+    my_post = Post.objects.get(pk=post_pk)
+    my_post.delete()
+    return redirect('blogs:change')
 
 # Create your views here.
