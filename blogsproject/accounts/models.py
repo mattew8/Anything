@@ -4,10 +4,10 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, Permis
 class BlogUserManager(BaseUserManager):
     # 유저 생성 시 create_user함수가 작동된다!
     def create_user(self, user_id, username, user_phone, password=None):
-        if not user_id:
-            raise ValueError("user_id를 입력해주세요")
-        if not username:
-            raise ValueError("이름을 입력해주세요")
+        # if not user_id:
+        #     raise ValueError("user_id를 입력해주세요")
+        # if not username:
+        #     raise ValueError("이름을 입력해주세요")
 
         user = self.model(
             user_id=user_id,

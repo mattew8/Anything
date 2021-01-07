@@ -2,14 +2,14 @@
 {% block content %}
     <form action="{% url 'accounts:register' %}" method="POST">
         {% csrf_token %}
-        
-        <input placeholder="이름" type="text" name="username"/>
+        <br>{{createform}}<br>
+        <!-- <input placeholder="이름" type="text" name="username"/>
 
         <input placeholder="연락처" type="number" name="user_phone"/>
 
         <input placeholder="아이디"type="text" name="user_id"/>
 
-        <input placeholder="비밀번호" type="password" name="password"/>
+        <input placeholder="비밀번호" type="password" name="password"/> -->
 
         <input type="submit" value="회원가입">
     </form>

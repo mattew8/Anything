@@ -1,9 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-    <form action="{% url 'accounts:login' %}" method="POST">
+    <!-- <form action="{% url 'accounts:login' %}" method="POST">
         {% csrf_token %}
         <input type="text" placeholder="아이디 또는 이메일" name="username">
         <input type="password" placeholder="비밀번호" name="password"><br>
         <input type="submit" value="로그인">
+    </form> -->
+
+    <form method="POST" action="{% url 'accounts:login' %}">
+        {% csrf_token %}
+        {{userform}}<br>
+        <input type="submit" value="Login">
     </form>
 {% endblock %}
