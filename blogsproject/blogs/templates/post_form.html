@@ -6,11 +6,12 @@
     {{form.errors}}
     {% endif %}
 
-    <form action="." method="POST">
+    <form action="." method="POST" enctype="multipart/form-data">
         {%csrf_token%}
         <span>title : {{form.title}}</span><br>
         <span>description : {{form.description}}</span><br>
         <span>content : {{form.content}}</span>
+        <span>image : {{form.image}}</span>
         <input type="submit" value="Submit">
     </form>
 

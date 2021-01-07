@@ -13,4 +13,4 @@ class PostSearchForm(forms.Form):
 class PostCreateForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'description', 'content',]
+        fields = ['title', 'description', 'content', 'image',] 

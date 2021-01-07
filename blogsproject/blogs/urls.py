@@ -1,5 +1,7 @@
 from django.urls import path, re_path
 from blogs.views import PostLV, PostDV, PostAV, PostMAV, PostDAV, PostTAV, PostYAV, TagCloudTV, TaggedObjectLV, create_comment, SearchFormView, PostCreateView, PostChangeLV, PostUpdateView, PostDeleteView
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'blogs'
 
@@ -31,4 +33,4 @@ urlpatterns = [
     path('change/', PostChangeLV, name='change'),
     path('<int:post_pk>/update/', PostUpdateView, name='update'),
     path('<int:post_pk>/delete/', PostDeleteView, name='delete'),
-]
+]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

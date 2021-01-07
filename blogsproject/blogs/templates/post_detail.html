@@ -2,6 +2,7 @@
 
 {%block title%}post_detail{%endblock%}
 {% block content %}
+{% load static %}
     <h2>{{object.title}}</h2>
     <p>
         {% if object.get_previous %}
@@ -34,8 +35,12 @@
     <div>
         {{ object.content|linebreaks}}
         <!-- |linebreaks -> 새로운 line을 인식하게 함 -->
+        {% if object.image %}
+        <img src="{{object.image.url}}">
+        {% endif %}
     </div>
     <br>
+
 
     <!-- Comment -->
     <div>

@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .views import HomeView
+from django.conf import settings
+from django.conf.urls.static import static
 # UserCreateView, UserCreateDoneTV
 
 urlpatterns = [
@@ -27,4 +29,4 @@ urlpatterns = [
     # path('accounts/', include('django.contrib.auth.urls')),
     # path('accounts/register/', UserCreateView.as_view(), name='register'),
     # path('accounts/register/done/', UserCreateDoneTV.as_view(), name='register_done'),
-]
+]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

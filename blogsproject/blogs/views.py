@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from blogsproject.views import OwnerOnlyMixin
+# from blogsproject.views import OwnerOnlyMixin
 from django.contrib.auth.decorators import login_required
 
 # ListView
@@ -144,7 +144,7 @@ class SearchFormView(FormView):
 # C
 def PostCreateView(request):
     if request.method == "POST":
-        form = PostCreateForm(request.POST)
+        form = PostCreateForm(request.POST, request.FILES)
         if form.is_valid():
             form.instance.owner = request.user
             form.save()
@@ -152,7 +152,7 @@ def PostCreateView(request):
     form = PostCreateForm()
     return render(request, 'post_form.html', {'form' : form})
 
-
+@login_required
 # R
 def PostChangeLV(request):
     post = Post.objects.all()

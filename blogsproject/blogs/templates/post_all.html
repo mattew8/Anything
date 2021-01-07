@@ -2,6 +2,9 @@
 
 {%block title%}post_all{%endblock%}
 {% block content %}
+{% load static %}
+    <img src="{% static 'image/Charlie_Brown.png' %}">
+    
     <h1>Blog List</h1><br>
     <b><a href="{% url 'blogs:search' %}">Search_page</a></b>
     <br><br>
