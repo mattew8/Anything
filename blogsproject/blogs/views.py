@@ -32,11 +32,6 @@ class PostDV(DetailView):
         context['commentform'] = CommentForm()
         return context
 
-# def PostDV(request,post_id):
-#     my_post = get_object_or_404(Post, pk=post_id)
-
-#     return render(request, 'post_detail.html', {'my_post':my_post})
-
 # ArchiveView
 # -> 테이블로부터 객체 리스트를 가져와, 날짜 필드를 기준으로 최신 객체를 출력
 # 역시 default html 이름 존재
