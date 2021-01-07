@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'taggit_templatetags2',
     # 인증
     'widget_tweaks',
+    'accounts',
 
 ]
 
@@ -138,3 +139,5 @@ TAGGIT_LIMIT = 50
 # 인증
 # LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
+
+AUTH_USER_MODEL = 'accounts.BlogUser'

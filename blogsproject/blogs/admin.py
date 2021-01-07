@@ -1,5 +1,6 @@
 from django.contrib import admin
 from blogs.models import Post, Comment
+from accounts.models import BlogUser
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
@@ -14,6 +15,6 @@ class PostAdmin(admin.ModelAdmin):
         return ','.join(o.name for o in obj.tags.all())
 
 admin.site.register(Comment)
-
+admin.site.register(BlogUser)
 
 # Register your models here.
