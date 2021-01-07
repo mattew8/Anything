@@ -9,6 +9,7 @@ def LoginView(request):
         password = request.POST['password']
 
         user = authenticate(request, username=username,password=password)
+        # username을 가져와서 사용자를 찾은 후, 입력한 password과 해당 사용자의 password와 같은지 비교!
 
         if user is not None:
             login(request, user)
@@ -20,12 +21,18 @@ def LoginView(request):
     else:
         return render(request,'login.html')    
 
-
 def RegisterView(request):
+    if request.method == 'POST':
+        user = BlogUser.objects.create_user(user_id=request.POST['user_id'],username=request.POST['username'],
+        user_phone=request.POST['user_phone'],password=request.POST['password'])
+        login(request, user)
+        return redirect('accounts:login')
+
     return render(request, 'register.html')
 
-def LogoutView(request):
-    return render(request, 'login.html')
+def LogoutView(request):    
+    logout(request)
+    return render(request, 'logout.html')
 
 def passwordChangeView(request):
     return render(request, 'login.html')

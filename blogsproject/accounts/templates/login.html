@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="{% url 'accounts:login' %}" method="POST" class="regi-input">
+{% extends "base.html" %}
+{% block content %}
+    <form action="{% url 'accounts:login' %}" method="POST">
         {% csrf_token %}
-        <input type="text" placeholder="아이디 또는 이메일" name="username" id="input-box">
-        <input type="password" placeholder="비밀번호" name="password" id="input-box"><br>
-        <input type="submit" value="로그인" id="input-btn">
+        <input type="text" placeholder="아이디 또는 이메일" name="username">
+        <input type="password" placeholder="비밀번호" name="password"><br>
+        <input type="submit" value="로그인">
     </form>
-</body>
-</html>
+{% endblock %}

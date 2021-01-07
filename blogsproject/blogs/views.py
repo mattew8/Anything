@@ -9,6 +9,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from blogsproject.views import OwnerOnlyMixin
+from django.contrib.auth.decorators import login_required
 
 # ListView
 class PostLV(ListView):
@@ -139,6 +140,7 @@ class SearchFormView(FormView):
         # form_valid 메소드는 보통 HttpResponseRedirect 객체를 반환한다.
         # 여기서는 form_valid 메소드를 재정의하여 render함수를 사용! -> HttpResponse 객체를 반환했다!
 
+@login_required
 # C
 def PostCreateView(request):
     if request.method == "POST":

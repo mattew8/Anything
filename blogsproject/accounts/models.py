@@ -52,7 +52,7 @@ class BlogUser(AbstractBaseUser, PermissionsMixin):
     is_admin = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=True)
-    is_superuser = models.BooleanField(default=True)
+    is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'user_id'
     REQUIRED_FIELDS = ['username']  # 필수로 받는 요소
