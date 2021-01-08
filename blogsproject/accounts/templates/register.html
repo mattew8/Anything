@@ -3,6 +3,7 @@
     <form action="{% url 'accounts:register' %}" method="POST">
         {% csrf_token %}
         <br>{{createform}}<br>
+        
         <!-- <input placeholder="이름" type="text" name="username"/>
 
         <input placeholder="연락처" type="number" name="user_phone"/>

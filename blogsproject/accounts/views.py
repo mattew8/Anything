@@ -44,6 +44,7 @@ def LogoutView(request):
     return render(request, 'logout.html')
 
 def passwordChangeView(request):
+    
     return render(request, 'login.html')
 
 
