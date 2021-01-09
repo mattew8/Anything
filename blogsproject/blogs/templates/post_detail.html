@@ -29,15 +29,17 @@
         {% endif %}
     </p>
     
+    <!-- post_detail -->
     <p>{{ object.modify_dt|date:"j F Y" }}</p>
     <br>
-
     <div>
         {{ object.content|linebreaks}}
         <!-- |linebreaks -> 새로운 line을 인식하게 함 -->
         {% if object.image %}
         <img src="{{object.image.url}}">
         {% endif %}
+        <a href="{% url 'blogs:likes' object.id object.slug %}">좋아요</a>
+        {{object.likes}}
     </div>
     <br>
 

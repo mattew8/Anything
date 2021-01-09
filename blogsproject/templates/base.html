@@ -9,6 +9,7 @@
     <div class="nav-bar" style="border: 1px solid black;">nav-bar</div>
     <div class="home-btn">
         <a href="{% url 'home' %}">Home</a>
+        <a href="/admin">admin</a>
     </div>
     <ul>
         {% if user.is_active %}

@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from blogs.views import PostLV, PostDV, PostAV, PostMAV, PostDAV, PostTAV, PostYAV, TagCloudTV, TaggedObjectLV, create_comment, delete_comment, create_recomment, delete_recomment, SearchFormView, PostCreateView, PostChangeLV, PostUpdateView, PostDeleteView
+from blogs.views import PostLV, PostDV, PostAV, PostMAV, PostDAV, PostTAV, PostYAV, TagCloudTV, TaggedObjectLV, create_comment, delete_comment, create_recomment, delete_recomment, SearchFormView, PostCreateView, PostChangeLV, PostUpdateView, PostDeleteView, LikeView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -37,4 +37,7 @@ urlpatterns = [
     path('change/', PostChangeLV, name='change'),
     path('<int:post_pk>/update/', PostUpdateView, name='update'),
     path('<int:post_pk>/delete/', PostDeleteView, name='delete'),
+
+    # Likes
+    path('likes/<int:post_id>/<str:slug>', LikeView, name='likes'),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

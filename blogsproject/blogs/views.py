@@ -29,7 +29,6 @@ class PostDV(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['recomment'] = ReComment.objects.all()
         context['commentform'] = CommentForm()
         context['recommentform'] = ReCommentForm()
         return context
@@ -190,5 +189,13 @@ def PostDeleteView(request, post_pk):
     my_post = Post.objects.get(pk=post_pk)
     my_post.delete()
     return redirect('blogs:change')
+
+# like
+def LikeView(request, post_id, slug):
+    like_num = Likes.objects.all()
+    like_num.add()
+    context['like'] = like_num
+    return redirect('blogs:post_detail', slug, context)
+    
 
 # Create your views here.
