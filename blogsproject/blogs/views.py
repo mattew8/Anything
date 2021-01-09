@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, TemplateView, FormView
 from django.views.generic.dates import ArchiveIndexView, YearArchiveView, MonthArchiveView
 from django.views.generic.dates import DayArchiveView, TodayArchiveView
-from blogs.models import Post, Comment
-from blogs.forms import CommentForm, PostSearchForm, PostCreateForm
+from blogs.models import Post, Comment, ReComment
+from blogs.forms import CommentForm, PostSearchForm, PostCreateForm, ReCommentForm
 from django.db.models import Q
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -29,7 +29,9 @@ class PostDV(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['recomment'] = ReComment.objects.all()
         context['commentform'] = CommentForm()
+        context['recommentform'] = ReCommentForm()
         return context
 
 # ArchiveView
@@ -105,6 +107,24 @@ def create_comment(request,post_id,slug):
         temp_form.post = Post.objects.get(id = post_id) 
         filled_form.save()  
     
+    return redirect('blogs:post_detail', slug)
+
+def delete_comment(request,comment_id,slug):
+    remove_comment = Comment.objects.get(pk=comment_id)
+    remove_comment.delete()
+    return redirect('blogs:post_detail', slug)
+  
+def create_recomment(request,comment_id, slug):
+    filled_form = ReCommentForm(request.POST)
+    if filled_form.is_valid():
+        temp_form = filled_form.save(commit=False)
+        temp_form.comment = Comment.objects.get(pk=comment_id)
+        temp_form.save()
+    return redirect('blogs:post_detail', slug)
+
+def delete_recomment(request,recomment_id, slug):
+    remove_recomment = ReComment.objects.get(pk=recomment_id)
+    remove_recomment.delete()
     return redirect('blogs:post_detail', slug)
 
 class SearchFormView(FormView):

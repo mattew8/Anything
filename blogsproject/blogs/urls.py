@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from blogs.views import PostLV, PostDV, PostAV, PostMAV, PostDAV, PostTAV, PostYAV, TagCloudTV, TaggedObjectLV, create_comment, SearchFormView, PostCreateView, PostChangeLV, PostUpdateView, PostDeleteView
+from blogs.views import PostLV, PostDV, PostAV, PostMAV, PostDAV, PostTAV, PostYAV, TagCloudTV, TaggedObjectLV, create_comment, delete_comment, create_recomment, delete_recomment, SearchFormView, PostCreateView, PostChangeLV, PostUpdateView, PostDeleteView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -12,7 +12,11 @@ urlpatterns = [
      # re_path(r'^post/(?P<slug>[-\w]+)/$', PostDV.as_view(), name='post_detail'),
 
     # 댓글
-    path('create_comment/<int:post_id>/<str:slug>', create_comment, name='create_comment'),
+    path('create_comment/<int:post_id>/<str:slug>/', create_comment, name='create_comment'),
+    path('delete_comment/<int:comment_id>/<str:slug>', delete_comment, name='delete_comment'),
+    # 대댓글
+    path('create_recomment/<int:comment_id>/<str:slug>/', create_recomment, name='create_recomment'),
+    path('delete_recomment/<int:recomment_id>/<str:slug>/', delete_recomment, name='delete_recomment'),
     
     # archive
     path('archive/', PostAV.as_view(), name='post_archive'),

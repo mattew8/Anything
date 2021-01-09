@@ -54,5 +54,10 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     body = models.CharField('내용', max_length=200)
     created_dt = models.DateField(auto_now = True)
- 
+
+class ReComment(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    body = models.CharField('대댓글내용', max_length=100, null=True)
+    created_dt = models.DateField(auto_now = True)
+
 # Create your models here.

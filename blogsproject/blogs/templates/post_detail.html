@@ -50,7 +50,18 @@
             <input type="submit" value="작성">
         </form>
         {% for comments in object.comment_set.all %}
-        comments : {{comments.body}}<br>
+        <span>comments : {{comments.body}}
+            <a href="{% url 'blogs:delete_comment' comments.id object.slug%}">삭제</a>
+            {% for recomments in comments.recomment_set.all %}
+            <br>recomments : {{recomments.body}}
+            <a href="{% url 'blogs:delete_recomment' recomments.id object.slug %}">삭제</a>
+            {% endfor %}
+            <form method="POST" action="{% url 'blogs:create_recomment' comments.id object.slug %}">
+                {%csrf_token%}
+                {{recommentform}}
+                <input type="submit" value="작성">
+            </form>
+        </span><br>
         {% endfor %}
     </div>
 
