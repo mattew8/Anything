@@ -39,5 +39,5 @@ urlpatterns = [
     path('<int:post_pk>/delete/', PostDeleteView, name='delete'),
 
     # Likes
-    path('likes/<int:post_id>/<str:slug>', LikeView, name='likes'),
+    path('likes/<int:post_id>/<str:slug>/', LikeView, name='likes'),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

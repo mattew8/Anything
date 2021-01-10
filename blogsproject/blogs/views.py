@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 # from blogsproject.views import OwnerOnlyMixin
 from django.contrib.auth.decorators import login_required
+from accounts.models import BlogUser
 
 # ListView
 class PostLV(ListView):
@@ -192,10 +193,19 @@ def PostDeleteView(request, post_pk):
 
 # like
 def LikeView(request, post_id, slug):
-    like_num = Likes.objects.all()
-    like_num.add()
-    context['like'] = like_num
-    return redirect('blogs:post_detail', slug, context)
-    
+    user = request.user
+    ilike = False
+    if request.method == "POST" and user.is_authenticated:
+        mylike = Post.objects.get(pk=post_id)
+
+        if mylike.likes.filter(id = user.id).exists():
+            mylike.likes.remove(user)
+            ilike = True
+        else :
+            mylike.likes.add(user)
+            ilike = False
+    else :
+        return redirect('accounts:login')
+    return redirect('blogs:post_detail', slug)
 
 # Create your views here.
