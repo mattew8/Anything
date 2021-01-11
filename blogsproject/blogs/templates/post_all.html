@@ -1,9 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'home.html' %}
 
 {%block title%}post_all{%endblock%}
 {% block content %}
 {% load static %}
-    <img src="{% static 'image/Charlie_Brown.png' %}">
+{%block extrahead%}{{block.super}}<link rel="stylesheet" href="{% static 'css/post_all.css' %}">{%endblock%}
+    <img src="{% static 'image/Charlie_Brown.png' %}" class="main-img">
     
     <h1>Blog List</h1><br>
     <b><a href="{% url 'blogs:search' %}">Search_page</a></b>

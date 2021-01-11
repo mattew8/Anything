@@ -1,8 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'home.html' %}
 
 {%block title%}post_detail{%endblock%}
 {% block content %}
 {% load static %}
+{%block extrahead%}{{block.super}}<link rel="stylesheet" href="{% static 'css/post_detail.css' %}">{%endblock%}
     <h2>{{object.title}}</h2>
     <p>
         {% if object.get_previous %}
@@ -32,12 +33,14 @@
     <!-- post_detail -->
     <p>{{ object.modify_dt|date:"j F Y" }}</p>
     <br>
-    <div>
+    <div class="mypost">
         {{ object.content|linebreaks}}
         <!-- |linebreaks -> 새로운 line을 인식하게 함 -->
+        <div class="main-img">
         {% if object.image %}
         <img src="{{object.image.url}}">
         {% endif %}
+       
         <form method="POST" action="{% url 'blogs:likes' object.id object.slug%}">
             {% csrf_token %}
             <input type="submit" value="좋아요">
@@ -60,7 +63,6 @@
             <a href="{% url 'blogs:delete_comment' comments.id object.slug%}">삭제</a>
             {% for recomments in comments.recomment_set.all %}
             <br>recomments : {{recomments.body}}
-            <a href="{% url 'blogs:delete_recomment' recomments.id object.slug %}">삭제</a>
             {% endfor %}
             <form method="POST" action="{% url 'blogs:create_recomment' comments.id object.slug %}">
                 {%csrf_token%}

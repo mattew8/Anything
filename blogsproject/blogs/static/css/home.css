@@ -1,0 +1,14 @@
+.myapps1, .myapps2, .myapps3{
+    border: 2px solid rebeccapurple;
+    display: inline-block;
+}
+
+.myapps2{
+    position: absolute;
+    left: 48%;
+}
+
+.myapps3{
+    position: absolute;
+    left: 70%;
+}

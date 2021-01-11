@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{%block title%}base_title{%endblock%}</title>
+    {%block extrahead%}<link rel="stylesheet" href="{% static 'css/base.css' %}">{%endblock%}
 </head>
-<body style="border: 3px solid black; height: 400px; width: 300px;">
-    <div class="nav-bar" style="border: 1px solid black;">nav-bar</div>
+<body>
+    <div class="nav-bar">nav-bar</div>
     <div class="home-btn">
         <a href="{% url 'home' %}">Home</a>
         <a href="/admin">admin</a>

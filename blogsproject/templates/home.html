@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
-
 {%block title%}home_title{%endblock%}
+{%load static%}
+{%block extrahead%}{{block.super}}<link rel="stylesheet" href="{% static 'css/home.css' %}">{%endblock%}
 
 {%block content%}
 <h1>Home_page</h1>
 
 {% for apps in app_list %}
-<a href="/{{apps}}">{{apps}}</a>
+<div class="apps">
+    <a href="/{{apps}}" class="myapps1">{{apps}}</a>
+    <div class="myapps2">2번앱</div>
+    <div class="myapps3">3번앱</div>
+</div>
 {% endfor %}
-
 
 {%endblock%}

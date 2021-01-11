@@ -194,16 +194,13 @@ def PostDeleteView(request, post_pk):
 # like
 def LikeView(request, post_id, slug):
     user = request.user
-    ilike = False
     if request.method == "POST" and user.is_authenticated:
         mylike = Post.objects.get(pk=post_id)
 
         if mylike.likes.filter(id = user.id).exists():
             mylike.likes.remove(user)
-            ilike = True
         else :
             mylike.likes.add(user)
-            ilike = False
     else :
         return redirect('accounts:login')
     return redirect('blogs:post_detail', slug)

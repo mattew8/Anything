@@ -1,0 +1,11 @@
+.main-img{
+    height: 100px;
+    width: 100px;
+    display: block;
+    float: right;
+}
+
+h1{
+    border: 1px solid red;
+    text-align: center;
+}
