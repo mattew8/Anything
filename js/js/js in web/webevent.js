@@ -5,14 +5,14 @@ function buttonClick(){
     alert('클릭');
 }
 
-// window.onload = function(){ 
-//     var button = document.getElementById('button');
-//     button.onclick = function(){
-//         this.innerHTML = this.innerHTML + '★';
-//         // 이벤트 리스터 내부 this 키워드 -> 이벤트를 발생한 자기 자신!
-//         // 즉 this.innerHTML -> 자기 자신의 문자를 변경
-//     }
-// }
+window.onload = function(){ 
+    var button = document.getElementById('button');
+    button.onclick = function(){
+        this.innerHTML = this.innerHTML + '★';
+        // 이벤트 리스너 내부 this 키워드 -> 이벤트를 발생한 자기 자신!
+        // 즉 this.innerHTML -> 자기 자신의 문자를 변경
+    }
+}
 
 
 // event 객체
