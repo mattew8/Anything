@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .api.serializers import PostSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework.views import APIView
+# from rest_framework.views import APIView
 from .models import Post
 from django.http import Http404
 from rest_framework import status
@@ -57,7 +57,7 @@ def PostDetail(request, pk, format=None):
         return Response(serializer.data)
 
     # Update
-    elif request.method == 'POST':
+    elif request.method == 'PUT':
         serializer = PostSerializer(post, data=request.data)
         # request요청이 들어온 그 post를 serializer틀에 담아 가져옴
 
@@ -67,9 +67,8 @@ def PostDetail(request, pk, format=None):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # Delete
-    elif request.method == 'Delete':
-        post = Post.objects.get(pk=pk)
-        Post.delete()
+    elif request.method == 'DELETE':
+        post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 # class PostList(APIView):
