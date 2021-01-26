@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'BlogApp',
     'rest_framework',
+    'knox',
 ]
 
 MIDDLEWARE = [
@@ -123,10 +124,10 @@ STATIC_URL = '/static/'
 
 
 # 클래스형 뷰 사용시! DjangoModelPermissions <- 요놈은 .queryset이나 .get_queryset()이 있어야함
-# REST_FRAMEWORK = {
-#     # Use Django's standard `django.contrib.auth` permissions,
-#     # or allow read-only access for unauthenticated users.
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-#     ]
-# }
+
+
+
+# DRF 인증방식 4가지 중 어느 것 쓰는지 명시해야! -> 여기서는 TokenAuthentication
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
+}
