@@ -19,49 +19,60 @@ from .permissions import IsOwnerOrReadOnly
 # but 자주 사용되는 기능이라 DRF에서 미리 구현 -> mixins !
 # queryset과 serializer_class를 지정해주기만하면 나머지는 상속받은 Mixin과 연결해주기만 하면 됨!
 
-class PostList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+# class PostList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+#     queryset = Post.objects.all()
+#     serializer_class = PostSerializer
+    
+#     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+#     # DRF -> 이용자 권한 설정 클래스 제공!
+#     # 여기서는 IsAuthenticatedOrReadOnly -> authenticated는 R C 가능 / 아니면 R only
+
+#     # 요청 method에 맞게 함수를 정의!
+#     def get(self, request, *args, **kwargs):
+#         return self.list(request, *args, **kwargs)
+
+#     def post(self, request, *args, **kwargs):
+#         def perform_create(self, serializer):
+#             # post요청 -> perform_create() 오버라이딩
+#             # instance save를 수정O 
+#             serializer.save(owner=self.request.user)
+#         return self.create(request, *args, **kwargs)
+
+# class PostDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, 
+#                 mixins.DestroyModelMixin, generics.GenericAPIView):
+#     queryset = Post.objects.all()
+#     serializer_class = PostSerializer
+#     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+#     # 기존 permissions에 우리가 생성한 IsOwnerOrReadOnly도 추가!
+
+#     def get(self, request, *args, **kwargs):
+#         return self.retrieve(request, *args, **kwargs)
+
+#     def put(self, request, *args, **kwargs):
+#         return self.update(request, *args, **kwargs)
+    
+#     def delete(self, request, *args, **kwargs):
+#         return self.destroy(request, *args, **kwargs)
+
+# generics Mixins 사용
+class PostList(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     # DRF -> 이용자 권한 설정 클래스 제공!
     # 여기서는 IsAuthenticatedOrReadOnly -> authenticated는 R C 가능 / 아니면 R only
 
-    # 요청 method에 맞게 함수를 정의!
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        def perform_create(self, serializer):
-            # post요청 -> perform_create() 오버라이딩
-            # instance save를 수정O 
-            serializer.save(owner=self.request.user)
-        return self.create(request, *args, **kwargs)
-
-class PostDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, 
-                mixins.DestroyModelMixin, generics.GenericAPIView):
+    def perform_create(self, serializer):
+        # post요청 -> perform_create() 오버라이딩
+        # instance save를 수정O 
+        serializer.save(owner=self.request.user)
+    
+class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = PostSerializer      
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     # 기존 permissions에 우리가 생성한 IsOwnerOrReadOnly도 추가!
 
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-    
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
-
-# generics Mixins 사용
-# class PostList(generics.ListCreateAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer
-    
-# class PostDetail(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer      
 
 # # 회원가입
 # class RegistrationAPI(generics.GenericAPIView):

@@ -127,7 +127,9 @@ STATIC_URL = '/static/'
 
 
 
-# DRF 인증방식 4가지 중 어느 것 쓰는지 명시해야! -> 여기서는 TokenAuthentication
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
-}
+# DRF 인증방식 4가지 중 어느 것 쓰는지 명시해야! -> 여기서는 rest_framework.permissions.IsAuthenticated
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.IsAuthenticated',
+#     ]
+# }

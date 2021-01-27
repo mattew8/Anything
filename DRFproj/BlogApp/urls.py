@@ -17,7 +17,3 @@ urlpatterns = [
 
 urlpatterns = format_suffix_patterns(urlpatterns)
 
-urlpatterns += [
-    path('api-auth/', include('rest_framework.urls')),
-]
-# 'api-auth/' <- 요 녀석 통해 페이지 상단 로그인/로그아웃 기능 사용 O
