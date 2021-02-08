@@ -12,6 +12,9 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from accounts.models import BlogUser
 
+from django.http import HttpResponse
+import json
+
 # ListView
 class PostLV(ListView):
     model = Post
