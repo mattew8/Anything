@@ -30,3 +30,14 @@ urlpatterns = [
     # path('accounts/register/', UserCreateView.as_view(), name='register'),
     # path('accounts/register/done/', UserCreateDoneTV.as_view(), name='register_done'),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+# debug_toolbar
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        path('__debug__/', include(debug_toolbar.urls)),
+
+        # For django versions before 2.0:
+        # url(r'^__debug__/', include(debug_toolbar.urls)),
+
+    ]

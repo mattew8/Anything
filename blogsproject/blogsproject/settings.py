@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     # 인증
     'widget_tweaks',
     'accounts',
-
+    # 디버그 툴바
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +57,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # debug_toolbar
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'blogsproject.urls'
@@ -143,3 +146,6 @@ TAGGIT_LIMIT = 50
 LOGIN_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'accounts.BlogUser'
+
+# debug_toolbar
+INTERNAL_IPS = ['127.0.0.1']
