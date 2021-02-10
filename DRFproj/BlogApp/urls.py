@@ -1,19 +1,18 @@
 from django.urls import path, include
-from .views import PostList, PostDetail, UserList, UserDetail
-# ,RegistrationAPI, LoginAPI, UserAPI
+from .views import PostViewset, UserViewSet
+from rest_framework import renderers
+from rest_framework.routers import DefaultRouter
 from rest_framework.urlpatterns import format_suffix_patterns
-from knox import views as knox_views
+
+router = DefaultRouter()
+# Router생성!
+
+router.register(r'posts', PostViewSet)
+router.register(r'users', UserViewSet)
 
 urlpatterns = [
-    path('posts/', PostList.as_view(), name='post_list'),
-    path('posts/<int:pk>/', PostDetail.as_view(), name='post_detail'),
-    # path('auth/register/', RegistrationAPI.as_view()),
-    # path('auth/login/', LoginAPI.as_view()),
-    # path('auth/user/', UserAPI.as_view()),
-    # path('auth/logout', knox_views.LogoutView.as_view(), name='knox_logout'),
-    path('user/', UserList.as_view()),
-    path('user/<int:pk>', UserDetail.as_view()),
+    path('', include(router.urls)),
+    # 이를 통해 API URL은 Router에 의해 자동적으로 결정!
 ]
 
-urlpatterns = format_suffix_patterns(urlpatterns)
-
+# urlpatterns = format_suffix_patterns(urlpatterns)

@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 # from rest_framework.decorators import api_view
 from rest_framework.views import APIView
-from rest_framework import mixins, generics, permissions
+from rest_framework import mixins, generics, permissions, viewsets
 
 from knox.models import AuthToken
 
@@ -54,24 +54,47 @@ from .permissions import IsOwnerOrReadOnly
 #     def delete(self, request, *args, **kwargs):
 #         return self.destroy(request, *args, **kwargs)
 
-# generics Mixins 사용
-class PostList(generics.ListCreateAPIView):
+# # generics Mixins 사용
+# class PostList(generics.ListCreateAPIView):
+#     queryset = Post.objects.all()
+#     serializer_class = PostSerializer
+#     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+#     # DRF -> 이용자 권한 설정 클래스 제공!
+#     # 여기서는 IsAuthenticatedOrReadOnly -> authenticated는 R C 가능 / 아니면 R only
+
+#     def perform_create(self, serializer):
+#         # post요청 -> perform_create() 오버라이딩
+#         # instance save를 수정O 
+#         serializer.save(owner=self.request.user)
+    
+# class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Post.objects.all()
+#     serializer_class = PostSerializer      
+#     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+#     # 기존 permissions에 우리가 생성한 IsOwnerOrReadOnly도 추가!
+
+# ViewSet refactor
+class PostViewSet(viewsets.ModelViewSet):
+    # ModelViewSet? -> 자동적으로 list, create, 검색, update, destroy를 수행!
+
+    # 다른 기능 추가 원할 시? -> @action 데코레이터 이용
+
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    # DRF -> 이용자 권한 설정 클래스 제공!
-    # 여기서는 IsAuthenticatedOrReadOnly -> authenticated는 R C 가능 / 아니면 R only
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    # 역시나 요 삼총사 지정!
+
+    # 공식 문서의 highlight기능
+    # @action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
+    # def highlight(self, request, *args, **kwargs):
+    #     snippet = self.get_object()
+    #     return Response(snippet.highlighted)
 
     def perform_create(self, serializer):
-        # post요청 -> perform_create() 오버라이딩
-        # instance save를 수정O 
+        # 이전과 마찬가지로 POST 요청시 작동될 perform_create()를 오버라이딩 해준 것
         serializer.save(owner=self.request.user)
-    
-class PostDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer      
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
-    # 기존 permissions에 우리가 생성한 IsOwnerOrReadOnly도 추가!
+
+
 
 
 # # 회원가입
@@ -136,10 +159,22 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
 #     def get_object(self):
 #         return self.request.user
 
-class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+# class UserList(generics.ListAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
 
-class UserDetail(generics.RetrieveAPIView):
+# class UserDetail(generics.RetrieveAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+
+# ViewSet refactor
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    # ReadOnlyModelViewSet? -> 자동적으로 ReadOnly를 수행!
+
+    # 해당 ViewSet은 자동적으로 list와 검색 기능을 수행!
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    # 다른 view를 작성했을 때처럼 queryset과 serializer_class를 지정
+    # but 두 개의 클래스에 중복 지정해줄 필요X됨!
+
