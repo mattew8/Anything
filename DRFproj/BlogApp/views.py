@@ -7,12 +7,24 @@ from rest_framework import status
 # from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework import mixins, generics, permissions, viewsets
+from rest_framework.pagination import PageNumberPagination
 
 from knox.models import AuthToken
 
 from .models import Post
 from .api.serializers import PostSerializer, CreateUserSerializer, UserSerializer, LoginUserSerializer
 from .permissions import IsOwnerOrReadOnly
+
+# Custom Pagination
+class LargeResultsSetPagination(PageNumberPagination):
+    page_size = 100
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 4
+    page_size_query_param = 'page_size'
+    max_page_size = 10
 
 # DRF mixins!
 # APIView에서는 각 요청 method에 맞게 serializer에서 직접 처리
@@ -83,6 +95,7 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     # 역시나 요 삼총사 지정!
+    pagination_class = StandardResultsSetPagination
 
     # 공식 문서의 highlight기능
     # @action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
@@ -177,4 +190,5 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserSerializer
     # 다른 view를 작성했을 때처럼 queryset과 serializer_class를 지정
     # but 두 개의 클래스에 중복 지정해줄 필요X됨!
+
 

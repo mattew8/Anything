@@ -133,3 +133,9 @@ STATIC_URL = '/static/'
 #         'rest_framework.permissions.IsAuthenticated',
 #     ]
 # }
+
+# Pagination
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}

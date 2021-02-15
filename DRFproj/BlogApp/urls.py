@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import PostViewset, UserViewSet
+from .views import PostViewSet, UserViewSet
 from rest_framework import renderers
 from rest_framework.routers import DefaultRouter
 from rest_framework.urlpatterns import format_suffix_patterns
