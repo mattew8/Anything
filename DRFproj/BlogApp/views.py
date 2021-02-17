@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import Http404
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from accounts.models import BlogUser
 
 from rest_framework.response import Response
 from rest_framework import status
@@ -8,8 +9,6 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework import mixins, generics, permissions, viewsets
 from rest_framework.pagination import PageNumberPagination
-
-from knox.models import AuthToken
 
 from .models import Post
 from .api.serializers import PostSerializer, CreateUserSerializer, UserSerializer, LoginUserSerializer
@@ -172,6 +171,7 @@ class PostViewSet(viewsets.ModelViewSet):
 #     def get_object(self):
 #         return self.request.user
 
+# DRF User
 # class UserList(generics.ListAPIView):
 #     queryset = User.objects.all()
 #     serializer_class = UserSerializer
@@ -186,7 +186,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
     # 해당 ViewSet은 자동적으로 list와 검색 기능을 수행!
 
-    queryset = User.objects.all()
+    queryset = BlogUser.objects.all()
     serializer_class = UserSerializer
     # 다른 view를 작성했을 때처럼 queryset과 serializer_class를 지정
     # but 두 개의 클래스에 중복 지정해줄 필요X됨!

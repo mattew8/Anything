@@ -20,7 +20,13 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('BlogApp.urls')),
-    path('api-auth/', include('rest_framework.urls')),
+    
+    path('rest-auth/', include('rest_auth.urls')),
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+
+    path('accounts/', include('allauth.urls')),
+    
+    # path('api-auth/', include('rest_framework.urls')),
     # 'api-auth/' <- 요 녀석 통해 페이지 상단 로그인/로그아웃 기능 사용 O
 ]
 
