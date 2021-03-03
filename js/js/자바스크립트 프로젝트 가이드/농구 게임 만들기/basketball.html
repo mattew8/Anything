@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="basketball.css">
+</head>
+<body>
+    <!-- 점수판 -->
+    <div class="scoreboard">
+        <div class="scoreboard-inner">
+            <div class="shots-left">
+                <span>남은 슛 횟수</span>
+                <!-- 왜 누구는 class, 누구는 id? -> 이후 동적으로 값 변경시 지칭하기 위해! -->
+                <span id="left">15</span>
+            </div>
+
+            <div class="score">
+                <div class="score-name">컴퓨터</div>
+                <div id="com-score" class="score-number">0</div>
+            </div>
+
+            <div class="score">
+                <div class="score-name">사용자</div>
+                <div id="user-score" class="score-number">0</div>
+            </div>
+        </div>
+
+        <div id="text">컴퓨터부터 시작!</div>
+    </div>
+
+    <!-- 슛 조작부 -->
+    <div class="control-pannel">
+        <div id="computer" class="panel">
+            <div class="control-name">컴퓨터</div>
+            <button onclick="onCumputerShoot()">슛</button>
+        </div>
+
+        <div id="user" class="panel">
+            <div class="control-name">사용자</div>
+            <button onclick="onUserShoot(2)">2점슛</button>
+            <button onclick="onUserShoot(3)">3점슛</button>
+        </div>
+    </div>
+
+    <script src='basketball.js'></script>
+</body>
+</html>
