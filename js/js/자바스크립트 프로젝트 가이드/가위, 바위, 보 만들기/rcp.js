@@ -4,7 +4,8 @@ var ROCK = '바위';
 var PAPER = '보';
 
 function onButtonClick(userInput){
-    // com가 낼 가위바위보
+
+    // com가 낼 가위바위보 선언
     var comInput;
 
     // com은 random하게 가위/바위/보 중 하나 냄
@@ -17,49 +18,54 @@ function onButtonClick(userInput){
         comInput = PAPER;
     }
 
-//     switch (userInput) {
-//         case SCISSORS:
-//             switch (comInput){
-//                 case SCISSORS:
-//                     alert('컴퓨터:' + comInput + '- 비김!');
-//                     break; // -> swich문 : 충족하는 case 나타날 경우, 그 아래 모든 코드(case충족 안하는 녀석들도)작동 -> break 통한 탈출
-//                 case ROCK:
-//                     alert('컴퓨터:' + comInput + '- 짐!');
-//                     break
-//                 case PAPER:
-//                     alert('컴퓨터:' + comInput + '- 이김!');
-//                     break
-//             }
-//             break;
-//         case ROCK:
-//             switch (comInput){
-//                 case SCISSORS:
-//                     alert('컴퓨터:' + comInput + '- 이김!');
-//                     break; 
-//                 case ROCK:
-//                     alert('컴퓨터:' + comInput + '- 비짐!');
-//                     break
-//                 case PAPER:
-//                     alert('컴퓨터:' + comInput + '- 짐!');
-//                     break
-//             }
-//             break;
-//         // swich문 모든 조건 해당x 일 때 실행
-//         default:
-//             switch (comInput){
-//                 case SCISSORS:
-//                     alert('컴퓨터:' + comInput + '- 짐!');
-//                     break; 
-//                 case ROCK:
-//                     alert('컴퓨터:' + comInput + '- 이김!');
-//                     break
-//                 default:
-//                     alert('컴퓨터:' + comInput + '- 비김!');
-//                     break
-//             }
-//             break;
-//     }
+    var result = '컴퓨터 : ' + comInput;
 
+    // swich문을 통해 userInput과 comInput을 비교
+    switch (userInput) {
+        case SCISSORS:
+            switch (comInput){
+                case SCISSORS:
+                    result += '- 비김!';
+                    // alert('컴퓨터:' + comInput + '- 비김!');
+
+                    break; // -> swich문 : 충족하는 case 나타날 경우, 그 아래 모든 코드(case충족 안하는 녀석들도)작동 -> break 통한 탈출
+                case ROCK:
+                    result += '- 짐!';
+                    break
+                case PAPER:
+                    result += '- 이김!';
+                    break
+            }
+            break;
+        case ROCK:
+            switch (comInput){
+                case SCISSORS:
+                    result += '- 이김!';
+                    break; 
+                case ROCK:
+                    result += '- 비짐!';
+                    break
+                case PAPER:
+                    result += '- 짐!';
+                    break
+            }
+            break;
+        // default : swich문 모든 조건 해당x 일 때 실행
+        default:
+            switch (comInput){
+                case SCISSORS:
+                    result += '- 짐!';
+                    break; 
+                case ROCK:
+                    result += '- 이김!';
+                    break
+                default:
+                    result += '- 비김!';
+                    break
+            }
+            break;
+    }
+    alert(result)
 }
 
 
