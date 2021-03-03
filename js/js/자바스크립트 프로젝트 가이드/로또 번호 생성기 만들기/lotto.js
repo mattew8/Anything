@@ -21,3 +21,16 @@ for (var i = 1; i<=6; i++){
 
     result.push(num);
 }
+
+// result를 오름차순으로 정렬 -> 그냥 sort()사용하면x!
+// why) 숫자 정렬시 문자열 반환 후 정렬한다는 특징 때문에 의도한대로 작동x
+// so sort()함수가 인자로 받을 수 있는 비교 함수를 새로 만들어(지금은 익명함수 형태로), result의 모든 요소를 a-b를 통해 비교 후 줄세우기!
+result.sort(function(a,b){
+    return a-b;
+    // a-b가 양수면 sort를 통해 a는 b의 뒤에 위치(반대 마찬가지!) -> 숫자 정렬 가능!
+})
+
+// i번째 result를 html에 입력
+for (var i=0; i<6; i++) {
+    document.write('<span class="ball">' + result[i] + '</span>');
+}
