@@ -51,3 +51,41 @@
     font-size: 13px;
     color: #bd5a00;
 }
+
+/* --- */
+
+#item-template{
+    display: none;
+}
+
+.item{
+    border-radius: 14px;
+    border: 1px solid #cacaca;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+}
+
+.item-no{
+    display: inline-block;
+    font-size: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: middle;
+    min-width: 17px;
+}
+
+.item-detail{
+    display: inline-block;
+    margin: 5px 0 0 15px;
+    vertical-align: middle;
+}
+
+.item-name{
+    font-size: 20px;
+}
+
+.item-addr{
+    font-size: 14px;
+    color: #909090;
+    margin-top: 2px;
+}
