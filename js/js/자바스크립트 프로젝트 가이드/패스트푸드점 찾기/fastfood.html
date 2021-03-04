@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+    <script type="text/javascript" src="fastfood.js"></script>
+    <link rel="stylesheet" href="fastfood.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">
+                패스트푸드점 찾기
+            </div>
+
+            <div class="search">
+                <input id="txt-search" type="text">
+                <button class="btn-search">검색</button>
+            </div>
+        </div>
+
+        <div class="body">
+            <div class="total"></div>
+            <div class="list"></div>
+        </div>
+
+        <div class="paging"></div>
+    </div>
+
+    <div id="item-template" class="item">
+        <div class="item-no"></div>
+        <div class="item-detail">
+            <div class="item-name"></div>
+            <div class="item-addr"></div>
+        </div>
+    </div>
+</body>
+</html>

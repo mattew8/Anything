@@ -6,7 +6,7 @@ var comScore = 0;
 var userScore = 0;
 
 // 남은 슛 횟수
-var shotsLeft =     5;
+var shotsLeft = 5;
 
 // 성공 실패 text 보여주는 함수
 function showText(texts){
@@ -32,7 +32,7 @@ function updateUserScore(score){
 // 컴퓨터 버튼 활성화/비활성화 함수
 function disableComBtn(flag){
     var comBtn = document.getElementsByClassName('btn-com');
-    // 컴퓨터가 슛한 후 버튼 비활성화 - getElementsByClassName은 선택된 elem가 하나라도 리턴값은 복수! -> for문으로 받아줘야 함
+    // 컴퓨터가 슛한 후 버튼 비활성화 - getElementsByClassName은 선택된 elem가 `하나라도 리턴값은 복수! -> for문으로 받아줘야 함
     for (var i=0; i < comBtn.length; i++){
         comBtn[i].disabled = flag;
     }    
